@@ -1,0 +1,30 @@
+    Tic Tac Toe
+
+    GUI Tic Tac Toe game implemented in PyQt6 with AI players and animation and GUI customization
+    Copyright (C) 2023 Ξένη Γήινος
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    My accounts:
+    GMail: estranger921@gmail.com
+    StackOverflow: https://stackoverflow.com/users/16383578/%ce%9e%ce%ad%ce%bd%ce%b7-%ce%93%ce%ae%ce%b9%ce%bd%ce%bf%cf%82
+    Code Review Stack Exchange: https://codereview.stackexchange.com/users/234107/%ce%9e%ce%ad%ce%bd%ce%b7-%ce%93%ce%ae%ce%b9%ce%bd%ce%bf%cf%82
+    SuperUser: https://superuser.com/users/1250181/%ce%9e%ce%ad%ce%bd%ce%b7-%ce%93%ce%ae%ce%b9%ce%bd%ce%bf%cf%82
+
+    All redistributions of this program must include this file and acknowledge me as the original author. Failure to comply might lead to prosecution.
+    If you modify the program, you can add your name in the list of authors below. Each time the program is redistributed, new names are allowed to be added.
+    But the list of author names isn't allowed to be shortened, no entries are to be removed or edited in any way.
+
+    List of authors:
+    Ξένη Γήινος                                                                                                                     original author
