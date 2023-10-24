@@ -1,0 +1,68 @@
+{
+    "normal": {
+        "QCheckBox": "checkbox",
+        "QCheckBox:hover, QCheckBox#Hover": "checkbox_hover",
+        "QCheckBox:pressed, QCheckBox#Pressed": "checkbox_pressed",
+        "QFrame#Scroll": "scrollframe",
+        "QGroupBox": "groupbox",
+        "QGroupBox#P1": "groupbox_p1",
+        "QGroupBox#P2": "groupbox_p2",
+        "QGroupBox#Stats": "groupbox_stats",
+        "QLabel": "label",
+        "QLabel#Cell": "board_base",
+        "QLabel#Loss": "loss",
+        "QLabel#P1Win": "player1_win",
+        "QLabel#P2Win": "player2_win",
+        "QLabel#Tie": "tie",
+        "QLabel#Win": "win",
+        "QLabel#Edit, QLineEdit": "lineedit",
+        "QPushButton, DummyButton#Base": "button",
+        "QSpinBox": "spinbox",
+        "QLabel#Hover": "board_hover",
+        "QTableWidget#Game::item:hover": "board_hover",
+        "QLabel#P1, QPushButton#P1": "player1_base",
+        "QLabel#P2, QPushButton#P2": "player2_base",
+        "DummyButton#Hover, QPushButton:hover, QPushButton#P1:hover, QPushButton#P2:hover": "button_hover",
+        "DummyButton#Pressed, QPushButton:pressed, QPushButton#P1:pressed, QPushButton#P2:pressed": "button_pressed",
+        "QRadioButton, QRadioButton#Base": "radiobutton",
+        "QRadioButton:hover, QRadioButton#Hover": "radiobutton_hover",
+        "QRadioButton:pressed, QRadioButton#Pressed": "radiobutton_pressed"
+    },
+    "special": {
+        "QRadioButton#Base::indicator, QRadioButton#Hover::indicator, QRadioButton#Pressed::indicator, QRadioButton::indicator": [
+            "radiobutton_indicator",
+            false
+        ],
+        "QLabel#Mock": [
+            "combobox",
+            false,
+            [
+                "color"
+            ]
+        ],
+        "QGroupBox#Top": [
+            "combobox",
+            true,
+            [
+                "background",
+                "border"
+            ]
+        ],
+        "QScrollBar::vertical": [
+            "scrollbar",
+            false,
+            null,
+            true
+        ],
+        "QScrollBar::handle:vertical": [
+            "handle",
+            false,
+            null,
+            true
+        ],
+        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical": [
+            "arrow",
+            false
+        ]
+    }
+}

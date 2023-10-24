@@ -1,0 +1,164 @@
+{
+    "window": {
+        "background": "#201a33"
+    },
+    "label": {
+        "textcolor": "#b2ffff"
+    },
+    "win": {
+        "textcolor": "#ffff00"
+    },
+    "loss": {
+        "textcolor": "#ff00ff"
+    },
+    "tie": {
+        "textcolor": "#00ffff"
+    },
+    "board_base": {
+        "background": "#140a33",
+        "bordercolor": "#632b80",
+        "borderstyle": "groove"
+    },
+    "board_hover": {
+        "lowlight": "#a33ba3",
+        "highlight": "#ff5cff",
+        "bordercolor": "#ff00ff",
+        "borderstyle": "outset"
+    },
+    "player1_base": {
+        "lowlight": "#6345bf",
+        "highlight": "#855cff",
+        "bordercolor": "#4000ff",
+        "borderstyle": "inset"
+    },
+    "player1_win": {
+        "lowlight": "#30bfbf",
+        "highlight": "#b2ffff",
+        "bordercolor": "#00ffff",
+        "borderstyle": "inset"
+    },
+    "player2_base": {
+        "lowlight": "#a36629",
+        "highlight": "#ff9f40",
+        "bordercolor": "#ff8000",
+        "borderstyle": "inset"
+    },
+    "player2_win": {
+        "lowlight": "#bfbf30",
+        "highlight": "#ffffb2",
+        "bordercolor": "#ffff00",
+        "borderstyle": "inset"
+    },
+    "groupbox_p1": {
+        "background": "#331980",
+        "bordercolor": "#402080",
+        "borderstyle": "groove"
+    },
+    "groupbox_p2": {
+        "background": "#801980",
+        "bordercolor": "#402080",
+        "borderstyle": "groove"
+    },
+    "groupbox_stats": {
+        "background": "#002a40",
+        "bordercolor": "#402080",
+        "borderstyle": "groove"
+    },
+    "groupbox": {
+        "background": "#211740",
+        "bordercolor": "#402080",
+        "borderstyle": "groove"
+    },
+    "combobox": {
+        "background": "#422e80",
+        "textcolor": "#c000ff",
+        "bordercolor": "#552b80",
+        "borderstyle": "outset"
+    },
+    "combobox_menu": {
+        "background": "#422e80",
+        "hoverbase": "#7800d7",
+        "hovercolor": "#ffb2ff",
+        "bordercolor": "#8000c0",
+        "borderstyle": "groove"
+    },
+    "button": {
+        "lowlight": "#5454c0",
+        "highlight": "#3fbfff",
+        "textcolor": "#ff3fff",
+        "bordercolor": "#4080c0"
+    },
+    "button_hover": {
+        "lowlight": "#00a3a3",
+        "highlight": "#5cffff",
+        "textcolor": "#0000ff",
+        "bordercolor": "#0080ff"
+    },
+    "button_pressed": {
+        "lowlight": "#00a3a3",
+        "highlight": "#00b2b2",
+        "textcolor": "#000080",
+        "bordercolor": "#4080c0"
+    },
+    "checkbox": {
+        "textcolor": "#b2ffff"
+    },
+    "checkbox_hover": {
+        "lowlight": "#8040c0",
+        "highlight": "#ff00ff",
+        "textcolor": "#0000ff"
+    },
+    "checkbox_pressed": {
+        "lowlight": "#8040c0",
+        "highlight": "#550072",
+        "textcolor": "#ffb2ff"
+    },
+    "radiobutton": {
+        "textcolor": "#b2ffff"
+    },
+    "radiobutton_indicator": {
+        "bordercolor": "#4000ff",
+        "borderstyle": "solid"
+    },
+    "radiobutton_hover": {
+        "lowlight": "#8040c0",
+        "highlight": "#ff00ff",
+        "textcolor": "#0000ff"
+    },
+    "radiobutton_pressed": {
+        "lowlight": "#8040c0",
+        "highlight": "#550072",
+        "textcolor": "#ffb2ff"
+    },
+    "spinbox": {
+        "background": "#422e80",
+        "textcolor": "#c000ff",
+        "bordercolor": "#8000c0",
+        "borderstyle": "groove"
+    },
+    "lineedit": {
+        "background": "#422e80",
+        "textcolor": "#c000ff",
+        "bordercolor": "#8000c0",
+        "borderstyle": "groove"
+    },
+    "scrollframe": {
+        "bordercolor": "#ff3399",
+        "borderstyle": "groove"
+    },
+    "scrollbar": {
+        "lowlight": "#504080",
+        "highlight": "#6652a3",
+        "bordercolor": "#4000ff",
+        "borderstyle": "groove"
+    },
+    "handle": {
+        "lowlight": "#e617e6",
+        "highlight": "#ff80ff"
+    },
+    "arrow": {
+        "background": "#331980",
+        "bordercolor": "#7040ff",
+        "borderstyle": "outset"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "P1": {
+        "Blend": "Reflect",
+        "Color": [
+            255,
+            14,
+            171
+        ],
+        "Player": "Super AI+",
+        "Shape": "Pentagram 2"
+    },
+    "P2": {
+        "Blend": "Overlay",
+        "Color": [
+            64,
+            128,
+            255
+        ],
+        "Player": "Human",
+        "Shape": "Hexagram 0"
+    }
+}

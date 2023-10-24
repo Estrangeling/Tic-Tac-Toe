@@ -1,0 +1,53 @@
+{
+    "Board": [
+        ["Board Cell", "board_base"],
+        ["Board Hover", "board_hover"],
+        ["Player 1", "player1_base"],
+        ["Player 2", "player2_base"],
+        ["Player 1 Win", "player1_win"],
+        ["Player 2 Win", "player2_win"]
+    ],
+    "Button": [
+        ["Button Base", "button"],
+        ["Button Hover", "button_hover"],
+        ["Button Pressed", "button_pressed"]
+    ],
+    "CheckBox": [
+        ["CheckBox Base", "checkbox"],
+        ["CheckBox Hover", "checkbox_hover"],
+        ["CheckBox pressed", "checkbox_pressed"]
+    ],
+    "ComboBox": [
+        ["ComboBox", "combobox"],
+        ["ComboBox Menu", "combobox_menu"]
+    ],
+    "LineEdit": [
+        ["LineEdit", "lineedit"]
+    ],
+    "Miscellaneous": [
+        ["Player 1 Box", "groupbox_p1"],
+        ["Player 2 Box", "groupbox_p2"],
+        ["Stats Box", "groupbox_stats"],
+        ["Groupbox", "groupbox"],
+        ["Label Win", "win"],
+        ["Label Loss", "loss"],
+        ["Label Tie", "tie"],
+        ["Label", "label"],
+        ["Background", "window"]
+    ],
+    "RadioButton": [
+        ["RadioButton", "radiobutton"],
+        ["Radio Indicator", "radiobutton_indicator"],
+        ["Radio Hover", "radiobutton_hover"],
+        ["Radio Pressed", "radiobutton_pressed"]
+    ],
+    "ScrollArea": [
+        ["ScrollArea Frame", "scrollframe"],
+        ["Scrollbar", "scrollbar"],
+        ["Scroll Handle", "handle"],
+        ["Scroll Arrow", "arrow"]
+    ],
+    "SpinBox": [
+        ["SpinBox", "spinbox"]
+    ]
+}
