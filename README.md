@@ -42,6 +42,8 @@ to get a completely different theme. The theme is almost certainly ugly, and it 
 
 Of course if you don't like the new theme you can just revert it, or parts of it. There is also an option to restore all settings to default.
 
+And there is some animation here, I don't know if it fits, and seemingly the animation is unnecessary and purposeless, but I just thought it would be funny to implement. If you press the run button, many widgets will periodically change states, the interval between changes is exactly 125 milliseconds, or one eighth of a second, many widgets will randomly change their styles and text and/or image every 0.125 seconds. And the animation will go on forever until it is manually paused or stopped, or your devices loses power.
+
 Instructions on how to play:
 
 First you need to download the entire repository (obviously), then you need to run `analyze_tic_tac_toe_states.py` once to generate the necessary data files needed for the AI players. Then you can just run the game anytime by running `tic-tac-toe.py`.
