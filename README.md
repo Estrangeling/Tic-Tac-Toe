@@ -47,3 +47,5 @@ And there is some animation here, I don't know if it fits, and seemingly the ani
 Instructions on how to play:
 
 First you need to download the entire repository (obviously), then you need to run `analyze_tic_tac_toe_states.py` once to generate the necessary data files needed for the AI players. Then you can just run the game anytime by running `tic-tac-toe.py`.
+
+I wrote every line of code entirely by myself without anyone else's help, and all artworks are created by me. You aren't authorized to plagiarize, you shouldn't falsely claim to be the project's author. You will be sued if I found out you steal the credit of my work. Be warned.
