@@ -5,6 +5,7 @@ from logic import STATES_P1, STATES_P2_COUNTER
 from pathlib import Path
 
 
+SWITCH = cycle(["Stop", "Run"])
 FOLDER = str(Path(__file__).parent).replace("\\", "/")
 CONFIG_PATH = Path(f"{FOLDER}/config/theme.json")
 CONFIG = json.loads(CONFIG_PATH.read_text())
