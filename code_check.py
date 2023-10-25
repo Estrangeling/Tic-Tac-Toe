@@ -18,10 +18,10 @@ files = [
     "control",
     "gamecontrol",
     "logic",
+    "main",
     "preview",
     "shared",
     "theme",
-    "tic-tac-toe",
 ]
 
 modules = {}
