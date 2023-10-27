@@ -33,6 +33,22 @@ NORMAL_KEYS = {
 EXTRA_ATTRIBUTES = {
     "QLabel#Mock": {"margin-left": "1px"},
     "QLabel#Top": {"margin-left": "1px"},
+    "DummyButton#Base": {
+        "border-style": "outset",
+        "border-width": "3px",
+        "border-radius": "6px",
+    },
+    "DummyButton#Hover": {
+        "border-style": "outset",
+        "border-width": "3px",
+        "border-radius": "6px",
+    },
+    "DummyButton#Pressed": {
+        "border-style": "inset",
+        "border-width": "3px",
+        "border-radius": "6px",
+    },
+    "TitleBar": {"border": "0px"},
     "QTableWidget#Game::item:hover": {"margin": "4px"},
     "QScrollBar::vertical": {"width": "16px"},
     "QScrollBar::handle:vertical": {"min-height": "80px", "margin": "18px"},
@@ -143,7 +159,7 @@ BLEND_MODES = {
 }
 
 
-IMMUTABLE = """DummyButton#Base, DummyButton#Hover, QPushButton, QPushButton#P1, QPushButton#P2 {{
+IMMUTABLE = """DummyButton#Base, DummyButton#Hover, QPushButton, QPushButton#P1, QPushButton#P2, SquareButton {{
     border-style: outset;
     border-width: 3px;
     border-radius: 6px;
