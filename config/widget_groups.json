@@ -33,7 +33,9 @@
         ["Label Loss", "loss"],
         ["Label Tie", "tie"],
         ["Label", "label"],
-        ["Background", "window"]
+        ["Background", "window"],
+        ["Title Bar", "titlebar"],
+        ["Title Button", "squarebutton"]
     ],
     "RadioButton": [
         ["RadioButton", "radiobutton"],
