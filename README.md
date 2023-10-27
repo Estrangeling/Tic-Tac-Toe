@@ -1,12 +1,13 @@
 # Tic-Tac-Toe
 GUI Tic Tac Toe game implemented in PyQt6 with AI players and animation and GUI customization
 
-![2023-10-25_005800](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/d4e060bd-816a-4409-b6f1-84939fb97c84)
-![2023-10-25_005819](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/48cd4e6f-4905-4e65-abaa-6660ab73d0e0)
-![2023-10-25_005841](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/b4dc83cb-ffc9-45c7-8a32-b3c136266987)
-![2023-10-25_005848](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/10f83bfa-924e-4035-9829-96a0914794e4)
-![2023-10-25_005913](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/66a4ff76-d9c4-49c4-bb3c-553c77fa0ec4)
-![2023-10-25_005905](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/98ca13b0-5f98-42b8-b7b5-4c6279a7a7f1)
+![2023-10-28_011616](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/78370d9d-e453-41cd-864c-d53931123119)
+![2023-10-28_011643](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/d4509253-194e-4566-988c-cde4eb5e1820)
+![2023-10-28_011630](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/accd00ab-b7e2-4c2b-82a0-ce913020486c)
+![2023-10-28_011146](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/b96aae58-ed56-478a-ac6e-21d1b1ea0ee0)
+![2023-10-28_011510](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/e94aede0-29f4-4e5a-afab-da2463025d50)
+![2023-10-28_011337](https://github.com/Estrangeling/Tic-Tac-Toe/assets/78679218/81c1916a-b1a3-47b8-bc55-c65f2833027b)
+
 
 
 Features: six AI players with varying level of skills, each can be played against, or you can let them fight each other.
