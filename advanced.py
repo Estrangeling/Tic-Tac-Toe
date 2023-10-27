@@ -5,17 +5,18 @@ from PyQt6.QtCore import QSize, Qt, pyqtSignal
 from PyQt6.QtWidgets import QAbstractItemView, QScrollArea, QTableWidget
 from shared import *
 
-CELLSTYLES = {
+
+SQUARESTYLES = {
     name: Style_Compiler(f"QLabel#{name}", CONFIG[config])
-    for name, config in (
-        ("Cell", "board_base"),
-        ("Hover", "board_hover"),
-        ("P1", "player1_base"),
-        ("P2", "player2_base"),
-        ("P1Win", "player1_win"),
-        ("P2Win", "player2_win"),
-    )
+    for name, config in zip(CELLNAMES, CELLKEYS)
 }
+GLOBALS["cellstyles"] = {key: CONFIG[key].copy() for key in CELLKEYS}
+CELLSTYLES = {
+    name: Style_Compiler(f"QLabel#{name}", GLOBALS["cellstyles"][config])
+    for name, config in zip(CELLNAMES, CELLKEYS)
+}
+
+
 PLAYER_SETTINGS_PATH = Path(f"{FOLDER}/config/player_settings.json")
 if PLAYER_SETTINGS_PATH.is_file():
     PLAYER_SETTINGS = json.loads(PLAYER_SETTINGS_PATH.read_text())
@@ -213,7 +214,7 @@ class Square(BaseCell):
 
         if name:
             self.setObjectName(name)
-            self.setStyleSheet(CELLSTYLES[name].compile_style())
+            self.setStyleSheet(SQUARESTYLES[name].compile_style())
 
 
 class Cell(BaseCell):
