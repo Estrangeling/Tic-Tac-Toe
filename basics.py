@@ -1,5 +1,13 @@
+from PyQt6 import QtGui
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QColor, QFocusEvent, QFont, QFontMetrics
+from PyQt6.QtGui import (
+    QColor,
+    QFocusEvent,
+    QFont,
+    QFontMetrics,
+    QMouseEvent,
+    QShowEvent,
+)
 from PyQt6.QtWidgets import (
     QAbstractButton,
     QCheckBox,
@@ -10,7 +18,6 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
-    QMessageBox,
     QPushButton,
     QRadioButton,
     QVBoxLayout,
@@ -63,6 +70,11 @@ class CenterLabel(CustomLabel):
 class Score(CenterLabel):
     def __init__(self, text: str, name: str) -> None:
         super().__init__(text, name, 30, 16)
+
+
+class LongScore(CenterLabel):
+    def __init__(self, text: str, name: str) -> None:
+        super().__init__(text, name, 42, 16)
 
 
 class BlackButton(CenterLabel):
@@ -129,24 +141,6 @@ def make_box(
     return box
 
 
-class MessageBox(QMessageBox):
-    instances = []
-
-    def __init__(self, title: str, text: str) -> None:
-        super().__init__()
-        MessageBox.instances.append(self)
-        self.setFont(FONT)
-        self.setWindowTitle(title)
-        self.setWindowIcon(GLOBALS["ICON"])
-        self.setIcon(QMessageBox.Icon.Information)
-        self.setText(text)
-        self.setStandardButtons(QMessageBox.StandardButton.Ok)
-        self.set_style()
-
-    def set_style(self) -> None:
-        self.setStyleSheet(STYLIZER.get_style())
-
-
 class Label(QLabel):
     def __init__(self, text: str) -> None:
         super().__init__()
@@ -180,28 +174,55 @@ class ColorEdit(QLineEdit):
             self.returnPressed.emit()
 
 
-class ColorPicker(QColorDialog):
+class ColorPicker(QWidget):
     instances = []
 
     def __init__(self) -> None:
         super().__init__()
+        self.init_window()
+        self.add_dialog()
+        self.set_style()
+        self.dialog.accepted.connect(self.close)
+        self.dialog.rejected.connect(self.close)
+        ColorPicker.instances.append(self)
+
+    def init_window(self) -> None:
         self.setWindowIcon(GLOBALS["ICON"])
         self.setWindowTitle("Color Picker")
-        grid = self.findChild(QGridLayout)
+        self.setWindowFlags(
+            Qt.WindowType.FramelessWindowHint
+            | Qt.WindowType.MSWindowsFixedSizeDialogHint
+        )
+        self.vbox = make_vbox(self, 0)
+        self.vbox.addWidget(TitleBar("Color Picker", self.close, False))
+        self.setFixedSize(518, 436)
+        self.frame = self.frameGeometry()
+        center = self.screen().availableGeometry().center()
+        self.frame.moveCenter(center)
+        self.setObjectName("Picker")
+
+    def add_dialog(self) -> None:
+        self.dialog = QColorDialog()
+        self.dialog.setWindowFlag(Qt.WindowType.FramelessWindowHint)
+        grid = self.dialog.findChild(QGridLayout)
         for i in range(grid.count()):
             grid.itemAt(i).widget().setFont(FONT)
 
-        for e in self.findChildren(QAbstractButton):
+        for e in self.dialog.findChildren(QAbstractButton):
             e.setFont(FONT)
             e.setMinimumWidth(72)
             e.setFixedHeight(20)
 
-        for child in self.children():
+        for child in self.dialog.children():
             if isinstance(child, QWidget):
                 child.setFont(FONT)
 
-        self.set_style()
-        ColorPicker.instances.append(self)
+        self.vbox.addWidget(self.dialog)
+
+    def showEvent(self, e: QShowEvent) -> None:
+        self.move(self.frame.topLeft())
+        self.dialog.show()
+        e.accept()
 
     def set_style(self) -> None:
         self.setStyleSheet(STYLIZER.get_style())
@@ -220,7 +241,7 @@ class BasicColorGetter(Box):
 
     def init_connections(self) -> None:
         self.widgets["button"].clicked.connect(self._show_color)
-        self.widgets["picker"].accepted.connect(self.pick_color)
+        self.widgets["picker"].dialog.accepted.connect(self.pick_color)
         self.widgets["editor"].returnPressed.connect(self.edit_color)
 
     def set_color(self, text: str) -> None:
@@ -232,11 +253,11 @@ class BasicColorGetter(Box):
         return f"#{r:02x}{g:02x}{b:02x}"
 
     def _show_color(self) -> None:
-        self.widgets["picker"].setCurrentColor(QColor(*self.color))
+        self.widgets["picker"].dialog.setCurrentColor(QColor(*self.color))
         self.widgets["picker"].show()
 
     def pick_color(self) -> None:
-        self.color = self.widgets["picker"].currentColor().getRgb()[:3]
+        self.color = self.widgets["picker"].dialog.currentColor().getRgb()[:3]
         self.widgets["editor"].setText(self.color_text)
         self.widgets["editor"].color = self.color_text
 
@@ -245,3 +266,112 @@ class BasicColorGetter(Box):
         self.widgets["editor"].color = text
         self.set_color(text)
         self.widgets["editor"].clearFocus()
+
+
+class SquareButton(QPushButton):
+    def __init__(self, icon: str) -> None:
+        super().__init__()
+        self.setIcon(GLOBALS[icon])
+        self.setFixedSize(32, 32)
+
+
+class TitleBar(QGroupBox):
+    def __init__(self, name: str, exitfunc: Callable, minimize: bool = True) -> None:
+        super().__init__()
+        self.hbox = make_hbox(self, 0)
+        self.name = name
+        self.exitfunc = exitfunc
+        self.start = None
+        self.setObjectName("Title")
+        self.add_icon()
+        self.add_title()
+        self.add_buttons(minimize)
+        self.setFixedHeight(32)
+
+    def add_icon(self) -> None:
+        self.icon = QLabel()
+        self.icon.setPixmap(GLOBALS["Logo"])
+        self.icon.setFixedSize(32, 32)
+        self.hbox.addWidget(self.icon)
+        self.hbox.addStretch()
+
+    def add_title(self) -> None:
+        self.label = Label(self.name)
+        self.hbox.addWidget(self.label)
+        self.hbox.addStretch()
+
+    def add_buttons(self, minimize: bool = True) -> None:
+        if minimize:
+            self.minimize_button = SquareButton("Minimize")
+            self.minimize_button.clicked.connect(self.minimize)
+            self.hbox.addWidget(self.minimize_button)
+
+        self.close_button = SquareButton("Close")
+        self.close_button.clicked.connect(self.exitfunc)
+        self.hbox.addWidget(self.close_button)
+
+    def mousePressEvent(self, e: QMouseEvent) -> None:
+        if e.button() == Qt.MouseButton.LeftButton:
+            self.start = e.position()
+
+    def mouseMoveEvent(self, e: QMouseEvent) -> None:
+        if self.start is not None:
+            self.window().move((e.globalPosition() - self.start).toPoint())
+
+    def mouseReleaseEvent(self, e: QMouseEvent) -> None:
+        self.start = None
+
+    def minimize(self) -> None:
+        self.window().showMinimized()
+
+
+class MessageBox(QWidget):
+    instances = []
+
+    def __init__(self, title: str, text: str, icon: str, option: str) -> None:
+        super().__init__()
+        MessageBox.instances.append(self)
+        self.setObjectName("Window")
+        self.title = title
+        self.init_window()
+        self.setFixedSize(200, 136)
+        self.frame = self.frameGeometry()
+        center = self.screen().availableGeometry().center()
+        self.frame.moveCenter(center)
+        self.add_widgets(text, icon, option)
+        self.set_style()
+
+    def init_window(self) -> None:
+        self.setWindowTitle(self.title)
+        self.setWindowIcon(GLOBALS["ICON"])
+        self.setWindowFlags(
+            Qt.WindowType.FramelessWindowHint
+            | Qt.WindowType.MSWindowsFixedSizeDialogHint
+        )
+        self.vbox = make_vbox(self, 0)
+        self.vbox.addWidget(TitleBar(self.title, self.close, False))
+        self.hbox = QHBoxLayout()
+        self.vbox.addLayout(self.hbox)
+        self.hbox.addStretch()
+        self.buttonbar = QHBoxLayout()
+        self.buttonbar.addStretch()
+        self.vbox.addLayout(self.buttonbar)
+
+    def add_widgets(self, text: str, icon: str, option: str) -> None:
+        self.icon = CenterLabel("", "", 72, 72)
+        self.icon.setPixmap(GLOBALS[icon])
+        self.hbox.addWidget(self.icon)
+        self.label = Label(text)
+        self.label.setObjectName(self.title)
+        self.hbox.addWidget(self.label)
+        self.hbox.addStretch()
+        self.ok = Button(option)
+        self.ok.clicked.connect(self.close)
+        self.buttonbar.addWidget(self.ok)
+
+    def set_style(self) -> None:
+        self.setStyleSheet(STYLIZER.get_style())
+
+    def showEvent(self, e: QShowEvent) -> None:
+        self.move(self.frame.topLeft())
+        e.accept()
