@@ -6,7 +6,12 @@ from PyQt6.QtGui import QIcon, QImage, QPixmap
 from typing import Callable, Tuple
 
 
-WINDOWS = ("QColorDialog", "QMainWindow", "QMessageBox", "QWidget#Window")
+WINDOWS = (
+    "QMainWindow",
+    "QMessageBox",
+    "QWidget#Window",
+    "QWidget#Picker",
+)
 
 WINDOWS = (
     ", ".join(w for window in WINDOWS for w in (window, f"{window}::title"))
