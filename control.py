@@ -330,11 +330,14 @@ class ControlBox(Box):
         if window := GLOBALS.get("Window"):
             board = GLOBALS["GUIBoard"]
             window.setStyleSheet(STYLIZER.get_style())
+            for key in CELLKEYS:
+                for k, v in CONFIG[key].items():
+                    GLOBALS["cellstyles"][key][k] = v
+
             for cell in board.cells:
                 cell._change()
 
             board.set_interactive(board.interactive)
-
             if GLOBALS["run"]:
                 GLOBALS["RunButton"].click()
 
