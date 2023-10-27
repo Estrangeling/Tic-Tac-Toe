@@ -176,14 +176,22 @@ class Preview(QWidget):
         super().__init__()
         self.setWindowIcon(GLOBALS["ICON"])
         self.setWindowTitle("Preview")
+        self.setFixedSize(1304, 1004)
         GLOBALS["Preview"] = self
         self.qthread = Animation(self)
+        self.setWindowFlags(
+            Qt.WindowType.FramelessWindowHint
+            | Qt.WindowType.MSWindowsFixedSizeDialogHint
+        )
         self.init_icons()
         self.add_rows()
         self.init_GUI()
 
     def add_rows(self) -> None:
-        self.vbox = make_vbox(self)
+        self.box = make_vbox(self, 0)
+        self.box.addWidget(TitleBar("Preview", stop_and_exit))
+        self.vbox = make_vbox()
+        self.box.addLayout(self.vbox)
         self.rows = []
         for cls, func, is_row in CINQLIGNES:
             row = cls()
@@ -202,14 +210,18 @@ class Preview(QWidget):
 
         self.setObjectName("Window")
         self.update_style()
-        self.setFixedSize(1300, 960)
+        self.frame = self.frameGeometry()
+        center = self.screen().availableGeometry().center()
+        self.frame.moveCenter(center)
 
     def update_style(self) -> None:
         self.setStyleSheet(STYLIZER.get_style())
 
     def closeEvent(self, e: QCloseEvent) -> None:
-        GLOBALS["run"] = False
-        QTest.qWait(125)
+        stop_and_exit()
+
+    def showEvent(self, e: QShowEvent) -> None:
+        self.move(self.frame.topLeft())
         e.accept()
 
     @staticmethod
@@ -222,10 +234,21 @@ class Preview(QWidget):
         )
 
 
+def stop_and_exit() -> None:
+    GLOBALS["run"] = False
+    QTest.qWait(125)
+    GLOBALS["Preview"].close()
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
     GLOBALS["ICON"] = QIcon(f"{FOLDER}/Icons/logo.png")
+    GLOBALS["Logo"] = QPixmap(QImage(f"{FOLDER}/Icons/logo.png")).scaled(
+        32, 32, Qt.AspectRatioMode.KeepAspectRatio
+    )
+    GLOBALS["Close"] = QIcon(f"{FOLDER}/Icons/close.png")
+    GLOBALS["Minimize"] = QIcon(f"{FOLDER}/Icons/minimize.png")
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Tic Tac Toe")
     window = Preview()
     window.show()
