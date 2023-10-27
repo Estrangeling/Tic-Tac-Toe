@@ -1,7 +1,80 @@
 import random
+from typing import List
 from basics import *
+from color import RGB_from_HSV_pixel
+from functools import cache
 from shared import *
 from PyQt6.QtCore import pyqtSignal
+
+
+@cache
+def agm(a: int | float, b: int | float, n: int = 16) -> int | float:
+    if a > b:
+        a, b = b, a
+    for _ in range(n):
+        c = (a * b) ** 0.5
+        d = (a + b) / 2
+        a, b = c, d
+    return (c + d) / 2
+
+
+@cache
+def gauss(x: int | float, weight: int | float) -> int | float:
+    return np.exp(-(x - 0.5) * (x - 0.5) / (2 * weight**2))
+
+
+def randBias(
+    base: int | float, top: int | float, bias: int | float, weight: float = 0.5
+) -> int | float:
+    assert 0 < weight <= 1
+    influence = random.random()
+    x = random.random() * (top - base) + base
+    if x > bias:
+        return x + gauss(influence, weight) * (bias - x)
+    return x - gauss(influence, weight) * (x - bias)
+
+
+LUMA = {
+    "textcolor": (0.9, 1, agm(0.9, 1)),
+    "background": (0.2, 0.5, agm(0.2, 0.5)),
+    "lowlight": (1 / 3, 2 / 3, agm(1 / 3, 2 / 3)),
+    "highlight": (0.75, 1, agm(0.75, 1)),
+    "bordercolor": (0.5, 1, agm(0.5, 1)),
+    "hoverbase": (2 / 3, 0.8, agm(2 / 3, 0.8)),
+    "hovercolor": (0.9, 1, agm(0.9, 1)),
+}
+
+BORDERS = (
+    "groove",
+    "outset",
+    "ridge",
+    "solid",
+    "double",
+    "inset",
+)
+
+BACKGROUNDS = {"background", "lowlight", "highlight", "hoverbase"}
+
+
+def get_hue(key: str) -> float:
+    return (
+        randBias(0.5, 11 / 12, agm(0.5, 11 / 12), 0.25)
+        if key in BACKGROUNDS
+        else random.random()
+    )
+
+
+def make_weights(power: float, n: int) -> List[float]:
+    weights = [1.0]
+    remaining = 1.0
+    for _ in range(n - 1):
+        weights.append(term := remaining * power)
+        remaining -= term
+
+    return weights
+
+
+WEIGHTS = make_weights(agm(0.5, (5**0.5 - 1) / 2), 6)
 
 
 class PauseButton(Button):
@@ -103,10 +176,22 @@ class RandomizeButton(Button):
             entry = CONFIG[key]
             for k in entry:
                 entry[k] = (
-                    random.choice(BORDER_STYLES)
+                    random.choices(BORDERS, weights=WEIGHTS)[0]
                     if k == "borderstyle"
-                    else f"#{random.randrange(16777216):06x}"
+                    else RandomizeButton.weighted_color(k)
                 )
+
+    @staticmethod
+    def weighted_color(key: str) -> str:
+        r, g, b = [
+            round(i * 255)
+            for i in RGB_from_HSV_pixel(
+                get_hue(key),
+                randBias(0.5, 1, agm(0.5, 1), 0.25),
+                randBias(*LUMA[key]),
+            )
+        ]
+        return f"#{r:02x}{g:02x}{b:02x}"
 
 
 class AnimateCheckBox(CheckBox):
