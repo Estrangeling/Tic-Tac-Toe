@@ -4,7 +4,6 @@ from logic import *
 from PyQt6.QtCore import QSize, Qt, pyqtSignal
 from PyQt6.QtWidgets import QAbstractItemView, QScrollArea, QTableWidget
 from shared import *
-from typing import Tuple
 
 CELLSTYLES = {
     name: Style_Compiler(f"QLabel#{name}", CONFIG[config])
@@ -33,7 +32,7 @@ else:
             "Color": (20, 40, 80),
             "Player": "Master AI",
             "Shape": "Circle",
-        }
+        },
     }
 
 
@@ -159,7 +158,9 @@ class PieceColorGetter(BasicColorGetter):
     def init_GUI(self, name: str) -> None:
         super().init_GUI()
         self.widgets["button"] = PieceButton(name)
-        self.vbox.addWidget(self.widgets["editor"])
+        self.hbox = QHBoxLayout()
+        self.hbox.addWidget(self.widgets["editor"])
+        self.vbox.addLayout(self.hbox)
         self.vbox.addWidget(self.widgets["button"])
 
     def edit_color(self) -> None:
@@ -309,18 +310,20 @@ class BasicPlayerBox(Box):
         self.number = number
         self.order = order
 
-    def init_GUI(self) -> None:
+    def init_GUI(self, cls: type[Score] | type[LongScore]) -> None:
         self.vbox = make_vbox(self)
-        self.vbox.addWidget(Label(f"Player {self.number + 1}"))
-        self.add_scores()
+        hbox = QHBoxLayout()
+        hbox.addWidget(Label(f"Player {self.number + 1}"))
+        self.vbox.addLayout(hbox)
+        self.add_scores(cls)
         self.indicator = Label("")
 
-    def add_scores(self) -> None:
+    def add_scores(self, cls: type[Score] | type[LongScore]) -> None:
         self.scores = {}
         self.grid = QGridLayout()
         for i, label in enumerate(("Win", "Loss", "Tie")):
             self.grid.addWidget(CenterLabel(label, label, 30, 16), 0, i)
-            self.grid.addWidget(score := Score("0", label), 1, i)
+            self.grid.addWidget(score := cls("0", label), 1, i)
             self.scores[label] = score
 
     @property
@@ -338,7 +341,7 @@ class PlayerBox(BasicPlayerBox):
         GLOBALS["Animation"].orderchange.connect(self.update_indicator)
 
     def init_GUI(self) -> None:
-        super().init_GUI()
+        super().init_GUI(Score)
         self.vbox.addStretch()
         self.vbox.addWidget(self.indicator)
         self.vbox.addStretch()
@@ -364,9 +367,13 @@ class GamePlayerBox(BasicPlayerBox):
         GLOBALS["Game"].orderchange.connect(self.update_indicator)
 
     def init_GUI(self) -> None:
-        super().init_GUI()
-        self.vbox.addWidget(self.indicator)
-        self.vbox.addLayout(self.grid)
+        super().init_GUI(LongScore)
+        hbox = QHBoxLayout()
+        hbox.addWidget(self.indicator)
+        hbox1 = QHBoxLayout()
+        hbox1.addLayout(self.grid)
+        self.vbox.addLayout(hbox)
+        self.vbox.addLayout(hbox1)
 
     def update_indicator(self) -> None:
         self.indicator.set_text(f"Current: {self.player}")
@@ -452,12 +459,12 @@ class StatsBar(BasicStats):
 
 
 class Player(Box):
-    def __init__(
-        self, label: str, name: str
-    ) -> None:
+    def __init__(self, label: str, name: str) -> None:
         super().__init__()
         item = PLAYER_SETTINGS[name]
-        GLOBALS[name] = self.piece = Piece(item["Color"], item["Blend"], item["Shape"], name)
+        GLOBALS[name] = self.piece = Piece(
+            item["Color"], item["Blend"], item["Shape"], name
+        )
         self.item = item
         self.label = label
         self.changed = False
@@ -484,12 +491,13 @@ class Player(Box):
 
     def setup_GUI(self) -> None:
         self.vbox = make_vbox(self, 3)
+        self.vbox.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self._setup_playerbox()
         self._setup_player()
         self._setup_shape()
         self._setup_blend()
         self._setup_color()
-        self.setFixedSize(128, 330)
+        self.setFixedSize(150, 330)
 
     def _setup_playerbox(self) -> None:
         self.playerbox = GamePlayerBox(self.number)
@@ -501,23 +509,30 @@ class Player(Box):
         self.player_choice_box = ComboBox(PLAYERS["players"])
         self.player_choice_box.currentTextChanged.connect(self.update_player)
         self.player_choice_box.setCurrentText(self.item["Player"])
-        self.vbox.addWidget(self.player_choice_box)
+        hbox = QHBoxLayout()
+        hbox.addWidget(self.player_choice_box)
+        self.vbox.addLayout(hbox)
 
     def _setup_shape(self) -> None:
         self.shape_box = ComboBox(SHAPES)
         self.shape_box.setCurrentText(self.item["Shape"])
         self.shape_box.currentTextChanged.connect(self.pick_piece)
-        self.vbox.addWidget(self.shape_box)
+        hbox = QHBoxLayout()
+        hbox.addWidget(self.shape_box)
+        self.vbox.addLayout(hbox)
 
     def _setup_blend(self) -> None:
         self.blend_box = ComboBox(BLEND_MODES)
         self.blend_box.setCurrentText(self.item["Blend"])
         self.blend_box.currentTextChanged.connect(self.pick_blend)
-        self.vbox.addWidget(self.blend_box)
+        hbox = QHBoxLayout()
+        hbox.addWidget(self.blend_box)
+        self.vbox.addLayout(hbox)
 
     def _setup_color(self) -> None:
         r, g, b = self.item["Color"]
         self.colorgetter = PieceColorGetter(f"#{r:02x}{g:02x}{b:02x}", self.name)
+        self.colorgetter.vbox.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.colorgetter.widgets["button"].setIcon(self.piece.active.qicon)
         self.colorgetter.setObjectName(self.name)
         self.colorgetter.setStyleSheet("QGroupBox { border: 0px;}")
