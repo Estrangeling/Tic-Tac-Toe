@@ -97,3 +97,13 @@ BORDER_STYLES = (
     "none",
     "hidden",
 )
+
+CELLNAMES = ("Cell", "Hover", "P1", "P2", "P1Win", "P2Win")
+CELLKEYS = (
+    "board_base",
+    "board_hover",
+    "player1_base",
+    "player2_base",
+    "player1_win",
+    "player2_win",
+)
