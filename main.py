@@ -17,19 +17,23 @@ class Window(QMainWindow):
         super().__init__()
         GLOBALS["Window"] = self
         self.initialized = False
+        self.setFixedSize(622, 438)
         self.init_GUI()
         self.setup_widgets()
         self.add_widgets()
         self.setup_connections()
         self.setStyleSheet(STYLIZER.get_style())
         self.show()
-        self.setFixedSize(600, 420)
         self.initialized = True
         GLOBALS["Game"].auto_start()
         if GLOBALS["Game"].match:
             self.popup_box.setDisabled(False)
 
     def init_GUI(self) -> None:
+        self.setWindowFlags(
+            Qt.WindowType.FramelessWindowHint
+            | Qt.WindowType.MSWindowsFixedSizeDialogHint
+        )
         frame = self.frameGeometry()
         center = self.screen().availableGeometry().center()
         frame.moveCenter(center)
@@ -40,7 +44,8 @@ class Window(QMainWindow):
         self.setWindowTitle("Tic Tac Toe")
 
     def setup_widgets(self) -> None:
-        self.vbox = make_vbox(self.centralwidget)
+        self.vbox = make_vbox(self.centralwidget, 0)
+        self.vbox.addWidget(TitleBar("Tic Tac Toe", exitgame))
         self.hbox = make_hbox()
         self.preview = Preview()
         GLOBALS["POPUP"] = self.popup_box = CheckBox("Popup messages")
@@ -101,19 +106,21 @@ class Window(QMainWindow):
         GLOBALS["popup"] = self.popup_box.isChecked()
 
     def closeEvent(self, e: QCloseEvent) -> None:
-        GLOBALS["rungame"] = False
-        GLOBALS["pause"] = True
-        GLOBALS["run"] = False
-        STATSPATH.write_text(json.dumps(GLOBALS["Game"].stats, indent=4))
-        PLAYER_SETTINGS_PATH.write_text(json.dumps(PLAYER_SETTINGS, indent=4))
-        Path(f"{FOLDER}/Data/menace-memory.pkl").write_bytes(
-            pickle.dumps(MENACE_MEMORY, protocol=pickle.HIGHEST_PROTOCOL)
-        )
-        QTest.qWait(125)
-        for window in QApplication.topLevelWidgets():
-            window.close()
+        exitgame()
 
-        e.accept()
+
+def exitgame() -> None:
+    GLOBALS["rungame"] = False
+    GLOBALS["pause"] = True
+    GLOBALS["run"] = False
+    STATSPATH.write_text(json.dumps(GLOBALS["Game"].stats, indent=4))
+    PLAYER_SETTINGS_PATH.write_text(json.dumps(PLAYER_SETTINGS, indent=4))
+    Path(f"{FOLDER}/Data/menace-memory.pkl").write_bytes(
+        pickle.dumps(MENACE_MEMORY, protocol=pickle.HIGHEST_PROTOCOL)
+    )
+    QTest.qWait(125)
+    for window in QApplication.topLevelWidgets():
+        window.close()
 
 
 if __name__ == "__main__":
@@ -121,5 +128,13 @@ if __name__ == "__main__":
     app.setStyle("Fusion")
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Tic Tac Toe")
     GLOBALS["ICON"] = QIcon(f"{FOLDER}/Icons/logo.png")
+    GLOBALS["Logo"] = QPixmap(QImage(f"{FOLDER}/Icons/logo.png")).scaled(
+        32, 32, Qt.AspectRatioMode.KeepAspectRatio
+    )
+    GLOBALS["Close"] = QIcon(f"{FOLDER}/Icons/close.png")
+    GLOBALS["Minimize"] = QIcon(f"{FOLDER}/Icons/minimize.png")
+    GLOBALS["win_emoji"] = QPixmap(QImage(f"{FOLDER}/Icons/win.png"))
+    GLOBALS["loss_emoji"] = QPixmap(QImage(f"{FOLDER}/Icons/loss.png"))
+    GLOBALS["tie_emoji"] = QPixmap(QImage(f"{FOLDER}/Icons/tie.png"))
     window = Window()
     sys.exit(app.exec())
