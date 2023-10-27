@@ -55,9 +55,9 @@ class Game(QThread):
         self.over = False
         self.finished.connect(self.reset)
         self.messages = {
-            "Win": MessageBox("Win", "You won!"),
-            "Loss": MessageBox("Loss", "You lost..."),
-            "Tie": MessageBox("Tie", "It's a draw"),
+            "Win": MessageBox("Win", "You won!", "win_emoji", "Yes!!!"),
+            "Loss": MessageBox("Loss", "You lost...", "loss_emoji", "NOO!!!"),
+            "Tie": MessageBox("Tie", "It's a draw", "tie_emoji", "Okay..."),
         }
 
     def make_move(self, state: str, player: str, piece: str) -> None:
@@ -219,7 +219,7 @@ class Game(QThread):
                 GLOBALS["rungamebutton"].setDisabled(True)
             else:
                 GLOBALS["rungamebutton"].setDisabled(False)
-            
+
             self.new_players["changed"] = False
             self.gameover.emit()
             self.playermove.emit()
