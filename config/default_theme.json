@@ -60,7 +60,7 @@
         "borderstyle": "groove"
     },
     "groupbox_stats": {
-        "background": "#002a40",
+        "background": "#311755",
         "bordercolor": "#402080",
         "borderstyle": "groove"
     },
@@ -99,6 +99,10 @@
         "highlight": "#00b2b2",
         "textcolor": "#000080",
         "bordercolor": "#4080c0"
+    },    
+    "squarebutton": {
+        "background": "#382080",
+        "bordercolor": "#5319ff"
     },
     "checkbox": {
         "textcolor": "#b2ffff"
@@ -160,5 +164,9 @@
         "background": "#331980",
         "bordercolor": "#7040ff",
         "borderstyle": "outset"
+    },
+    "titlebar": {
+        "lowlight": "#400640",
+        "highlight": "#ff19ff"
     }
 }
