@@ -22,7 +22,7 @@
         "QTableWidget#Game::item:hover": "board_hover",
         "QLabel#P1, QPushButton#P1": "player1_base",
         "QLabel#P2, QPushButton#P2": "player2_base",
-        "DummyButton#Hover, QPushButton:hover, QPushButton#P1:hover, QPushButton#P2:hover, SquareButton:hover": "button_hover",
+        "DummyButton#Hover, QPushButton:hover, QPushButton#P1:hover, QPushButton#P2:hover": "button_hover",
         "DummyButton#Pressed, QPushButton:pressed, QPushButton#P1:pressed, QPushButton#P2:pressed": "button_pressed",
         "QRadioButton, QRadioButton#Base": "radiobutton",
         "QRadioButton:hover, QRadioButton#Hover": "radiobutton_hover",
